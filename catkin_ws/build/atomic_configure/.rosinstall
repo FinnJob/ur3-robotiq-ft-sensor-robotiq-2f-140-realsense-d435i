@@ -1,0 +1,2 @@
+- setup-file:
+    local-name: /home/zf/Documents/ROS/catkin_ws/devel/setup.sh

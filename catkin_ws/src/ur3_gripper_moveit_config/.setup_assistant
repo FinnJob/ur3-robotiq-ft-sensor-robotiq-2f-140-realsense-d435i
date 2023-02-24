@@ -1,0 +1,11 @@
+moveit_setup_assistant_config:
+  URDF:
+    package: ur_description
+    relative_path: urdf/ur3_ft_gripper_realsense.xacro
+    xacro_args: ""
+  SRDF:
+    relative_path: config/ur3_robot_ft_gripper.srdf
+  CONFIG:
+    author_name: FinnJob
+    author_email: 123@163.com
+    generated_timestamp: 1677207364
