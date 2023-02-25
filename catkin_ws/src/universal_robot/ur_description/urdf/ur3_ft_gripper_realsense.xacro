@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://wiki.ros.org/xacro" name="ur3_robot_ft_gripper">
+  <!--
+    This is a convenience top-level xacro which loads the macro for the UR3
+    which defines the default values for the various "parameters files"
+    parameters for a UR3.
+
+    This file is only useful when loading a stand-alone, completely isolated
+    robot with only default values for all parameters such as the kinematics,
+    visual and physical parameters and joint limits.
+
+    This file is not intended to be integrated into a larger scene or other
+    composite xacro.
+
+    Instead, xacro:include 'inc/ur3_macro.xacro' and override the defaults
+    for the arguments to that macro.
+
+    Refer to 'inc/ur_macro.xacro' for more information.
+  -->
+  <xacro:include filename="$(find ur_description)/urdf/inc/ur3_macro.xacro"/>
+  <xacro:ur3_robot prefix="" />
+  
+  <xacro:include filename="$(find robotiq_ft_sensor)/urdf/robotiq_ft300.urdf.xacro"/> 
+  <xacro:include filename="$(find robotiq_2f_140_gripper_visualization)/urdf/robotiq_arg2f_140.xacro" />
+
+  <!--robotiq_ft_sensor-->
+  <xacro:robotiq_ft300 prefix="" parent="tool0">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+  </xacro:robotiq_ft300>
+
+  <!--robotiq_arg2f_140.xacro已经调用了robotiq_arg2f_140宏定义，这里只需要把gripper和sensor用joint连接起来即可-->
+
+  <joint name="ft_gripper_joint" type="fixed">
+    <parent link="robotiq_ft_frame_id"/>
+    <child link="robotiq_arg2f_base_link"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+
+  <!-- Add realsense d435i -->
+  <xacro:arg name="use_nominal_extrinsics" default="false" />
+  <xacro:include filename="$(find realsense2_description)/urdf/_d435i.urdf.xacro"/>
+
+  <xacro:sensor_d435i parent="base" use_nominal_extrinsics="$(arg use_nominal_extrinsics)">
+    <origin xyz="0.4 0 1" rpy="0 1.57 0"/>
+  </xacro:sensor_d435i>
+  
+</robot>
